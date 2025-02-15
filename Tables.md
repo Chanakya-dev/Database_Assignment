@@ -162,3 +162,136 @@
 - `user_id` (INT, FOREIGN KEY REFERENCES Users(user_id))
 - `content` (TEXT, NOT NULL)
 
+I'll continue adding tables and fields for the remaining industries.  
+
+---
+
+## **6. Real Estate - Property Listings and Transactions Database**  
+### **Tables and Fields**  
+
+#### **Properties**  
+- `property_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `title` (VARCHAR(255), NOT NULL)  
+- `description` (TEXT, NULL)  
+- `price` (DECIMAL(15,2), NOT NULL, CHECK (price >= 0))  
+- `location` (VARCHAR(255), NOT NULL)  
+- `property_type` (ENUM('Apartment', 'House', 'Commercial', 'Land'), NOT NULL)  
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)  
+
+#### **Agents**  
+- `agent_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `email` (VARCHAR(255), UNIQUE, NOT NULL)  
+- `phone` (VARCHAR(15), UNIQUE, NOT NULL)  
+
+#### **Transactions**  
+- `transaction_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `property_id` (INT, FOREIGN KEY REFERENCES Properties(property_id))  
+- `buyer_id` (INT, FOREIGN KEY REFERENCES Users(user_id))  
+- `seller_id` (INT, FOREIGN KEY REFERENCES Users(user_id))  
+- `agent_id` (INT, FOREIGN KEY REFERENCES Agents(agent_id))  
+- `transaction_price` (DECIMAL(15,2), NOT NULL)  
+- `status` (ENUM('Pending', 'Completed', 'Cancelled'), DEFAULT 'Pending')  
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)  
+
+---
+
+## **7. Logistics & Supply Chain - Shipment Tracking and Inventory Management**  
+### **Tables and Fields**  
+
+#### **Warehouses**  
+- `warehouse_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `location` (VARCHAR(255), NOT NULL)  
+
+#### **Products**  
+- `product_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `category` (VARCHAR(255), NOT NULL)  
+- `quantity` (INT, NOT NULL, CHECK (quantity >= 0))  
+- `warehouse_id` (INT, FOREIGN KEY REFERENCES Warehouses(warehouse_id))  
+
+#### **Shipments**  
+- `shipment_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `product_id` (INT, FOREIGN KEY REFERENCES Products(product_id))  
+- `quantity` (INT, NOT NULL, CHECK (quantity > 0))  
+- `source_warehouse` (INT, FOREIGN KEY REFERENCES Warehouses(warehouse_id))  
+- `destination_warehouse` (INT, FOREIGN KEY REFERENCES Warehouses(warehouse_id))  
+- `status` (ENUM('Pending', 'In Transit', 'Delivered', 'Cancelled'), DEFAULT 'Pending')  
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)  
+
+---
+
+## **8. Entertainment & Streaming - Movies, Shows, and User Preferences Database**  
+### **Tables and Fields**  
+
+#### **Users**  
+- `user_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `email` (VARCHAR(255), UNIQUE, NOT NULL)  
+- `password` (VARCHAR(255), NOT NULL)  
+
+#### **Movies**  
+- `movie_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `title` (VARCHAR(255), NOT NULL)  
+- `genre` (VARCHAR(255), NOT NULL)  
+- `release_date` (DATE, NOT NULL)  
+- `duration` (INT, NOT NULL, COMMENT 'Duration in minutes')  
+
+#### **Watchlist**  
+- `watchlist_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `user_id` (INT, FOREIGN KEY REFERENCES Users(user_id))  
+- `movie_id` (INT, FOREIGN KEY REFERENCES Movies(movie_id))  
+- `status` (ENUM('Planned', 'Watching', 'Completed'), DEFAULT 'Planned')  
+
+---
+
+## **9. Retail & Inventory - Product Stock and Sales Management**  
+### **Tables and Fields**  
+
+#### **Stores**  
+- `store_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `location` (VARCHAR(255), NOT NULL)  
+
+#### **Products**  
+- `product_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `price` (DECIMAL(10,2), NOT NULL, CHECK (price >= 0))  
+- `stock` (INT, NOT NULL, CHECK (stock >= 0))  
+- `store_id` (INT, FOREIGN KEY REFERENCES Stores(store_id))  
+
+#### **Sales**  
+- `sale_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `store_id` (INT, FOREIGN KEY REFERENCES Stores(store_id))  
+- `product_id` (INT, FOREIGN KEY REFERENCES Products(product_id))  
+- `quantity_sold` (INT, NOT NULL, CHECK (quantity_sold > 0))  
+- `sale_amount` (DECIMAL(10,2), NOT NULL)  
+- `sale_date` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)  
+
+---
+
+## **10. Human Resources (HRMS) - Employee Records and Payroll Management**  
+### **Tables and Fields**  
+
+#### **Employees**  
+- `employee_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), NOT NULL)  
+- `email` (VARCHAR(255), UNIQUE, NOT NULL)  
+- `phone` (VARCHAR(15), UNIQUE, NOT NULL)  
+- `department_id` (INT, FOREIGN KEY REFERENCES Departments(department_id))  
+- `hire_date` (DATE, NOT NULL)  
+- `salary` (DECIMAL(15,2), NOT NULL, CHECK (salary > 0))  
+
+#### **Departments**  
+- `department_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `name` (VARCHAR(255), UNIQUE, NOT NULL)  
+
+#### **Payroll**  
+- `payroll_id` (INT, PRIMARY KEY, AUTO_INCREMENT)  
+- `employee_id` (INT, FOREIGN KEY REFERENCES Employees(employee_id))  
+- `salary_month` (DATE, NOT NULL)  
+- `amount` (DECIMAL(15,2), NOT NULL, CHECK (amount > 0))  
+- `status` (ENUM('Pending', 'Processed'), DEFAULT 'Pending')  
+
+---
