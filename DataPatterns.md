@@ -1,7 +1,3 @@
-Here’s sample data for each table across the five industries:  
-
----
-
 ## **1. E-Commerce - Online Retail Database**
 ### **Users**
 | user_id | name    | email            | password  | phone       | address             | created_at           |
