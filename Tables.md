@@ -69,7 +69,7 @@
 - `appointment_id` (INT, PRIMARY KEY, AUTO_INCREMENT)
 - `patient_id` (INT, FOREIGN KEY REFERENCES Patients(patient_id))
 - `doctor_id` (INT, FOREIGN KEY REFERENCES Doctors(doctor_id))
-- `appointment_date` (DATETIME, NOT NULL)
+- `appointment_date` (DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP)
 - `status` (ENUM('Scheduled', 'Completed', 'Cancelled'), DEFAULT 'Scheduled')
 
 #### **Medical_Records**
