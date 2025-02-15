@@ -136,5 +136,3 @@
 |-----------|--------|--------|------------------|
 | 1         | 1      | 2      | Nice post!        |
 | 2         | 2      | 1      | Welcome aboard!   |
-
-This sample data covers a variety of industries and helps illustrate database relationships. 🚀
